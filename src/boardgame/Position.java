@@ -22,11 +22,16 @@ public class Position {
 		this.row = row;
 	}
 
-	public Integer getColumm() {
+	public Integer getColumn() {
 		return column;
 	}
 
-	public void setColumm(Integer column) {
+	public void setColumn(Integer column) {
+		this.column = column;
+	}
+	
+	public void setValues(int row, int column) {
+		this.row = row;
 		this.column = column;
 	}
 	
