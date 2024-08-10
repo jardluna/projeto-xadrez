@@ -12,11 +12,11 @@ import chess.pieces.Rook;
 
 public class ChessMatch {
 
-	private Integer turn;
+	private int turn;
 	private Color currentPlayer;
 	private Board board;
-	private Boolean check;
-	private Boolean checkMate;
+	private boolean check;
+	private boolean checkMate;
 
 	private List<Piece> piecesOnTheBoard = new ArrayList<>();
 	private List<Piece> capturedPieces = new ArrayList<>();
@@ -25,12 +25,10 @@ public class ChessMatch {
 		board = new Board(8, 8);
 		turn = 1;
 		currentPlayer = Color.WHITE;
-		check = false;
-		checkMate = false;
 		initialSetup();
 	}
 
-	public Integer getTurn() {
+	public int getTurn() {
 		return turn;
 	}
 
@@ -38,11 +36,11 @@ public class ChessMatch {
 		return currentPlayer;
 	}
 	
-	public Boolean getCheck() {
+	public boolean getCheck() {
 		return check;
 	}
 	
-	public Boolean getCheckMate() {
+	public boolean getCheckMate() {
 		return checkMate;
 	}
 
@@ -83,7 +81,8 @@ public class ChessMatch {
 	}
 
 	private Piece makeMove(Position source, Position target) {
-		Piece p = board.removePiece(source);
+		ChessPiece p = (ChessPiece)board.removePiece(source);
+		p.increaseMoveCount();
 		Piece capturedPiece = board.removePiece(target);
 		board.placePiece(p, target);
 		if (capturedPiece != null) {
@@ -94,7 +93,8 @@ public class ChessMatch {
 	}
 
 	private void undoMove(Position source, Position target, Piece capturedPiece) {
-		Piece p = board.removePiece(target);
+		ChessPiece p = (ChessPiece)board.removePiece(target);
+		p.decreaseMoveCount();
 		board.placePiece(p, source);
 		if (capturedPiece != null) {
 			board.placePiece(capturedPiece, target);
